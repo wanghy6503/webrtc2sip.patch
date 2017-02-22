@@ -1,0 +1,11 @@
+--- mp_engine.cc.orig	2017-02-22 22:39:46.345057221 +0800
++++ mp_engine.cc	2017-02-22 22:41:26.667456450 +0800
+@@ -87,7 +87,7 @@
+ 			m_bValid = true;
+ 		}
+ 	}
+-
++    MediaSessionMgr::defaultsSetRtpPortRange(5000,60000);
+ }
+ 
+ MPEngine::~MPEngine()

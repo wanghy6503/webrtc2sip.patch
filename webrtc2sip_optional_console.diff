@@ -1,0 +1,45 @@
+Index: mp_mediaproxy.cc
+===================================================================
+--- mp_mediaproxy.cc	(revision 141)
++++ mp_mediaproxy.cc	(working copy)
+@@ -21,6 +21,7 @@
+ 
+ #include <libxml/tree.h>
+ 
++static int with_console = 1;
+ static char* sConfigXmlPath = NULL;
+ #define kSQLiteConnectionInfo  "./c2c_sqlite.db"
+ #define kSQLiteName "sqlite"
+@@ -447,6 +448,9 @@
+ 			}
+ 			mp_strn_update(&sConfigXmlPath, value, value_size);
+ 		}
++		else if(tsk_strniequals("--without-console", name, name_size)){
++			with_console = 0;
++		}
+ 		else if(tsk_strniequals("--help", name, name_size)){
+ 			printUsage();
+ 			exit(-1);
+@@ -493,11 +497,17 @@
+ 		exit (-1);
+ 	}
+ 
+-	while (fgets(command, sizeof(command), stdin) != NULL) {
+-		if (tsk_strnicmp(command, "quit", 4) == 0) {
+-            printf("+++ quit() +++");
+-            break;
+-        }
++	while (true) {
++		if(with_console) {
++			if(fgets(command, sizeof(command), stdin) == NULL) {
++				break;
++			} else {
++				if (tsk_strnicmp(command, "quit", 4) == 0) {
++            				printf("+++ quit() +++");
++            				break;
++				}
++			}
++        	}
+ 		// FIXME: https://code.google.com/p/webrtc2sip/issues/detail?id=96
+ 		tsk_thread_sleep(1);
+ 	}
