@@ -5,7 +5,7 @@
  		}
  	}
 -
-+    MediaSessionMgr::defaultsSetRtpPortRange(5000,60000);
++    MediaSessionMgr::defaultsSetRtpPortRange(6000,60000);
  }
  
  MPEngine::~MPEngine()
